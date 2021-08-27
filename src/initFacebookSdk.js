@@ -1,4 +1,4 @@
-export function initFacebookSdk () {
+const initPromise = (function initFacebookSdk () {
   (function(d, s, id){
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) {return;}
@@ -17,19 +17,32 @@ export function initFacebookSdk () {
       });
         
       window.FB.AppEvents.logPageView();
-
-      console.log("ASDASDASDASd")
       resolve(window.FB);
-
-      
-      /* window.FB.getLoginStatus(function(response) {
-        console.log('response', response)
-        resolve()
-      });
-
-      window.FB.login(function(response){
-        console.log('response', response)
-      });*/
     };
-  })
-}
+  });
+})();
+
+export const getLoginStatus = () => initPromise.then(() => {
+  return new Promise((resolve, reject) => {
+    window.FB.getLoginStatus(response => console.log('getLoginStatus', response) || resolve(response?.status === 'connected'));
+  });
+});
+
+export const login = () => initPromise.then(() => {
+  return new Promise((resolve, reject) => {
+    window.FB.login(response => console.log('login', response) || resolve(response?.status === 'connected'));
+  });
+});
+
+export const logout = () => initPromise.then(() => {
+  return new Promise((resolve, reject) => {
+    window.FB.logout(resolve);
+  });
+});
+
+export const getUser = (userId) => initPromise.then(() => {
+  return new Promise((resolve, reject) => {
+    window.FB.api(userId ? `/${userId}` : '/me', {fields: 'last_name, first_name, picture'}, resolve);
+  });
+});
+

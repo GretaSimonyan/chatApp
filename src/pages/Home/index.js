@@ -1,47 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { FBContext } from './../../contexts';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { login } from './../../initFacebookSdk';
+import { setLoggedIn } from '../../slices/users';
+import './index.scss';
 
 export default function Home() {
-  const FB = useContext(FBContext);
-  console.log(FB)
-  const [loginStatus, setLoginStatus] = useState(false);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    FB.getLoginStatus((response) => {
-      console.log('response', response);
-      setLoginStatus(response.status === 'connected');
-      getUserData();
-    });
-  }, [FB]);
-
-  const handleLogin = () => {
-    FB.login((response) => {
-      console.log('response', response);
-      setLoginStatus(response.status === 'connected');
-      getUserData();
-    });
-  }
   
-  const handleLogout = () => {
-    FB.logout((response) => {
-      console.log('response', response);
-      setLoginStatus(response.status === 'connected');
-    });
-  }
-
-  const getUserData = () => {
-    FB.api('/me', {fields: 'last_name, first_name, picture'}, function(response) {
-      console.log(response);
-    });
-  }
-
+  const handleClick = () => {
+    login()
+      .then( isLoggedIn => {
+        dispatch(setLoggedIn(isLoggedIn));
+      })
+  };
+  
   return (
-    <div>
-      Home
-      { loginStatus
-          ? <button onClick={handleLogout}>Logout</button>
-          : <button onClick={handleLogin}>Login</button>
-      }
+    <div class="container">
+      <h1>Login</h1>
+      <button onClick={handleClick} class="btn">Sign in</button>
     </div>
   );
 };

@@ -1,30 +1,36 @@
-import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from 'react-router-dom';
-import Home from './pages/Home';
-import Chat from './pages/Chat';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+import AuthorizedRoutes from './components/AuthorizedRoutes';
+import UnauthorizedRoutes from './components/UnauthorizedRoutes';
 import Header from './components/Header';
-import './App.css';
+import { getLoginStatus, getUser } from './initFacebookSdk';
+import { setLoggedIn } from './slices/users';
+import './App.scss';
 
 function App() {
+  const dispatch = useDispatch();
+  const loggedin = useSelector((store) => store.users.loggedIn);
+
+  useEffect(()=> {
+    getLoginStatus()
+      .then(isLoggedIn => {
+        if (isLoggedIn) {
+          return getUser()
+            .then(() => {
+              dispatch(setLoggedIn(true));
+            })
+        }
+        dispatch(setLoggedIn(false));
+      })
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
         <Router>
-          <div>
-            <Header />
-            <Switch>
-              <Route path="/chat">
-                <Chat />
-              </Route>
-              <Route path="/">
-                <Home />
-              </Route>
-            </Switch>
-          </div>
+          <Header />
+          { loggedin ? <AuthorizedRoutes /> : <UnauthorizedRoutes /> }
         </Router>
       </header>
     </div>
