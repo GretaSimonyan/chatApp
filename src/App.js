@@ -12,7 +12,7 @@ function App() {
   const dispatch = useDispatch();
   const loggedin = useSelector((store) => store.users.loggedIn);
 
-  useEffect(()=> {
+  useEffect(() => {
     getLoginStatus()
       .then(isLoggedIn => {
         if (isLoggedIn) {
@@ -27,12 +27,12 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <div className="App-header">
         <Router>
           <Header />
-          { loggedin ? <AuthorizedRoutes /> : <UnauthorizedRoutes /> }
+          {loggedin ? <AuthorizedRoutes /> : <UnauthorizedRoutes />}
         </Router>
-      </header>
+      </div>
     </div>
   );
 }

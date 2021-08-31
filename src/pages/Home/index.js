@@ -7,7 +7,6 @@ import './index.scss';
 export default function Home() {
   const dispatch = useDispatch();
 
-  
   const handleClick = () => {
     login()
       .then( isLoggedIn => {
@@ -16,9 +15,9 @@ export default function Home() {
   };
   
   return (
-    <div class="container">
+    <div className="container">
       <h1>Login</h1>
-      <button onClick={handleClick} class="btn">Sign in</button>
+      <button onClick={handleClick} className="btn">Sign in</button>
     </div>
   );
 };
