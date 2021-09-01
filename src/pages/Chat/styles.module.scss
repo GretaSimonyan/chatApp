@@ -1,0 +1,20 @@
+.chatLayout {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  position: relative;
+  top: -50px;
+  padding-top: 50px;
+  .usersList {
+    width: 300px;
+    flex-shrink: 0;
+  }
+
+  .chat {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    width: 100%;
+  }
+}

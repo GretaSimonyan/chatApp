@@ -1,0 +1,18 @@
+.form {
+  padding: 10px;
+  display: flex;
+  
+  .textarea {
+    width: 100%;
+    resize: none;
+    height: 100px;
+  }
+  .btnWrapper {
+    display: flex;
+    align-items: flex-end;
+
+    .btn{ 
+      width: 100px;
+    }
+  }
+}

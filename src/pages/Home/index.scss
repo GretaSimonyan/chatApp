@@ -1,0 +1,29 @@
+.container{
+  padding: 10px;
+  width: 300px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+h1{
+  color: #777;
+  font-size: 32px;
+}
+.btn{
+  background-color: #3498DB;
+  color: #fff;
+  line-height: 25px;
+  cursor: pointer;
+  padding: 12px 0;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  border: 2px solid transparent;
+  text-align: center;
+  width: 90%;
+  font-size: 16px;
+  transition: border .2s, background-color .2s;
+}
+.btn:hover,
+.btn:active {
+  background-color: #1F78B4;
+  border: 2px solid #1F78B4;
+}

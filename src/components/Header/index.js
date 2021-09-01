@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from './../../initFacebookSdk';
 import { setLoggedIn } from '../../slices/users';
+import styles from './styles.module.scss';
 
 function Header() {
   const dispatch = useDispatch();
@@ -16,21 +17,19 @@ function Header() {
   };
 
   return (
-    <div>
-      {
-        loggedin &&
-          <div className="container">
-            <button onClick={handleClick}>Sign Out</button>
-          </div>
-      }
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/chat">Chat</Link>
-        </li>
-      </ul>
+    <div className={styles.header}>
+      <div className={styles.left}>
+        {
+          loggedin &&
+          <Link to="/chat" className={styles.link}>Chat</Link>
+        }
+      </div>
+      <div className={styles.right}>
+        {
+          loggedin &&
+          <button onClick={handleClick}>Sign Out</button>
+        }
+      </div>
     </div>
   );
 }

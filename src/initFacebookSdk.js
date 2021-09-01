@@ -36,7 +36,7 @@ export const login = () => initPromise.then(() => {
 
 export const logout = () => initPromise.then(() => {
   return new Promise((resolve, reject) => {
-    window.FB.logout(response => console.log('logout', response) || resolve(response?.status === 'not_authorized'));
+    window.FB.logout(response => console.log('logout', response) || resolve());
   });
 });
 

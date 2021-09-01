@@ -6,7 +6,7 @@ import UnauthorizedRoutes from './components/UnauthorizedRoutes';
 import Header from './components/Header';
 import { getLoginStatus, getUser } from './initFacebookSdk';
 import { setLoggedIn } from './slices/users';
-import './App.scss';
+import styles from './App.module.scss';
 
 function App() {
   const dispatch = useDispatch();
@@ -26,15 +26,13 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <div className="App-header">
-        <Router>
-          <Header />
-          {loggedin ? <AuthorizedRoutes /> : <UnauthorizedRoutes />}
-        </Router>
-      </div>
+    <div className={styles.layout}>
+      <Router>
+        <Header />
+        {loggedin ? <AuthorizedRoutes /> : <UnauthorizedRoutes />}
+      </Router>
     </div>
   );
-}
+};
 
 export default App;
