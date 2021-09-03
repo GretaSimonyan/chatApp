@@ -5,23 +5,27 @@ import AuthorizedRoutes from './components/AuthorizedRoutes';
 import UnauthorizedRoutes from './components/UnauthorizedRoutes';
 import Header from './components/Header';
 import { getLoginStatus, getUser } from './initFacebookSdk';
-import { setLoggedIn } from './slices/users';
+import { saveUserData } from './initFirebaseSdk';
+import { setCurrUser } from './slices/users';
 import styles from './App.module.scss';
+import './initFirebaseSdk';
 
 function App() {
   const dispatch = useDispatch();
-  const loggedin = useSelector((store) => store.users.loggedIn);
+  const currUser = useSelector((store) => store.users.currUser);
 
   useEffect(() => {
     getLoginStatus()
       .then(isLoggedIn => {
         if (isLoggedIn) {
           return getUser()
-            .then(() => {
-              dispatch(setLoggedIn(true));
+            .then((data) => {
+              console.log('user_data', data);
+              saveUserData(data)
+                .then(() => dispatch(setCurrUser(data)))
             })
         }
-        dispatch(setLoggedIn(false));
+        dispatch(setCurrUser(null));
       })
   }, []);
 
@@ -29,7 +33,7 @@ function App() {
     <div className={styles.layout}>
       <Router>
         <Header />
-        {loggedin ? <AuthorizedRoutes /> : <UnauthorizedRoutes />}
+        {currUser?.id ? <AuthorizedRoutes /> : <UnauthorizedRoutes />}
       </Router>
     </div>
   );

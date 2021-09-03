@@ -1,7 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { login } from './../../initFacebookSdk';
-import { setLoggedIn } from '../../slices/users';
+import { login, getUser } from '../../initFacebookSdk';
+import { setCurrUser } from '../../slices/users';
+import { saveUserData } from '../../initFirebaseSdk';
 import './index.scss';
 
 export default function Home() {
@@ -10,7 +11,14 @@ export default function Home() {
   const handleClick = () => {
     login()
       .then( isLoggedIn => {
-        dispatch(setLoggedIn(isLoggedIn));
+        if (isLoggedIn) {
+          return getUser()
+            .then((data) => {
+              console.log('user_data', data);
+              saveUserData(data)
+                .then(() => dispatch(setCurrUser(data)))
+            })
+        }
       })
   };
   

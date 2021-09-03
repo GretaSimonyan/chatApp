@@ -2,17 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from './../../initFacebookSdk';
-import { setLoggedIn } from '../../slices/users';
+import { setCurrUser } from '../../slices/users';
 import styles from './styles.module.scss';
 
 function Header() {
   const dispatch = useDispatch();
-  const loggedin = useSelector((store) => store.users.loggedIn);
+  const currUser = useSelector((store) => store.users.currUser);
 
   const handleClick = () => {
     logout()
-      .then(isLoggedIn => {
-        dispatch(setLoggedIn(isLoggedIn));
+      .then(() => {
+        dispatch(setCurrUser(null));
       })
   };
 
@@ -20,13 +20,19 @@ function Header() {
     <div className={styles.header}>
       <div className={styles.left}>
         {
-          loggedin &&
+          currUser?.id &&
           <Link to="/chat" className={styles.link}>Chat</Link>
+        }
+      </div>
+      <div className={styles.left}>
+        {
+          currUser?.id &&
+          <Link to="/users" className={styles.link}>Users</Link>
         }
       </div>
       <div className={styles.right}>
         {
-          loggedin &&
+          currUser?.id &&
           <button onClick={handleClick}>Sign Out</button>
         }
       </div>

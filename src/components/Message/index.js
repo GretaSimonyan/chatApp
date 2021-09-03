@@ -1,6 +1,9 @@
 import React, { useMemo, memo } from 'react';
 
 const getFormatedTime = (dateString) => {
+  if (!dateString) {
+    return null
+  }
   const dateInstance = new Date(dateString);
   const h = dateInstance.getHours();
   const m = dateInstance.getMinutes();
