@@ -1,10 +1,10 @@
 import React, { useMemo, memo } from 'react';
 
-const getFormatedTime = (dateString) => {
-  if (!dateString) {
+const getFormatedTime = ({seconds, nanoseconds}) => {
+  if (!seconds) {
     return null
   }
-  const dateInstance = new Date(dateString);
+  const dateInstance = new Date(seconds * 1000 + nanoseconds / 1000000);
   const h = dateInstance.getHours();
   const m = dateInstance.getMinutes();
   return `${h < 10 ? '0' : ''}${h}:${m < 10 ? '0' : ''}${m}`;

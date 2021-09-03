@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { doc, onSnapshot, getFirestore, collection, addDoc, setDoc, getDocs, query, where } from "firebase/firestore";
+import { doc, onSnapshot, getFirestore, collection, addDoc, setDoc, getDocs, query, where, orderBy, limit } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyArmcmW04W9EnRxiJ3aeDPMs9p0rKnaafw",
@@ -26,7 +26,7 @@ export const sendMessage = (text, conversationId, senderId) => {
     text,
     conversationId,
     senderId,
-    created: (new Date()).toString(),
+    created: new Date(),
   });
 };
 
@@ -35,9 +35,19 @@ const unsub = onSnapshot(doc(db, "messages", "asd"), doc => {
 });
 
 export const subscribeToMessages = (convId, fn) => {
-  const q = query(collection(db, "messages"), where("conversationId", "==", convId));
+  const q = query(
+    collection(db, "messages"),
+    where("conversationId", "==", convId),
+    orderBy("created", "asc"),
+  );
   const unsub2 = onSnapshot(q, snapshot => {
-    const allColData = snapshot.docs.map(doc => doc.data());
+    const allColData = snapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        ...data,
+        id: doc.id,
+      }
+    });
     fn(allColData)
   });
   return unsub2;

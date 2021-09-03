@@ -10,7 +10,7 @@ export default function MessagesList() {
   const dispatch = useDispatch();
   const messagesList = useSelector((store) => store.messages.list);
   const { convId } = useParams();
-  
+
   useEffect(() => {
     const unsubscribe = subscribeToMessages(convId, (data) => dispatch(updateAllMessages(data)));
     return unsubscribe;
