@@ -1,4 +1,6 @@
 import React, { useMemo, memo } from 'react';
+import { useSelector } from 'react-redux';
+import styles from './styles.module.scss';
 
 const getFormatedTime = ({seconds, nanoseconds}) => {
   if (!seconds) {
@@ -12,9 +14,11 @@ const getFormatedTime = ({seconds, nanoseconds}) => {
 
 function Message({message}) {
   const formatedTime = useMemo(() => getFormatedTime(message.created), [message.created]);
+  const currUser = useSelector(store => store.users.currUser);
+  const isMy = currUser?.id === message.senderId;
 
   return (
-    <div>
+    <div className={isMy ? styles.myMessage : styles.message}>
       <div>
         {message.text}
       </div>

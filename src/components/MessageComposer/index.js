@@ -14,7 +14,7 @@ export default function MessageComposer() {
   const formHandleSubmit = (event) => {
     event?.preventDefault();
     dispatch(addMessage(text));
-    sendMessage(text, convId, currUser.id)
+    sendMessage(text, convId, currUser.id);
     setText('');
   };
   
