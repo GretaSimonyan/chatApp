@@ -18,15 +18,15 @@ body {
 
 a {
   text-decoration: none;
-  color: rgb(125, 187, 153);
+  color: #043b87;
 
   &:visited {
-    color: rgb(125, 187, 153);
-  }
-  &:hover {
-    color: rgb(93, 143, 115);
+    color: #043b87;
   }
   
+  &:hover {
+    color: #a2ddf9;
+  }
 }
 
 code {

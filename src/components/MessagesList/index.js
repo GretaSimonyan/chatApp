@@ -12,9 +12,9 @@ export default function MessagesList() {
   const { convId } = useParams();
 
   useEffect(() => {
-    const unsubscribe = subscribeToMessages(convId, (data) => dispatch(updateAllMessages(data)));
-    return unsubscribe;
-  }, []);
+    MessagesList.unsubscribe && MessagesList.unsubscribe();
+    MessagesList.unsubscribe = subscribeToMessages(convId, (data) => dispatch(updateAllMessages(data)));
+  }, [convId]);
 
   return (
     <div className={styles.messagesList}>

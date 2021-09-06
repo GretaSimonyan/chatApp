@@ -1,7 +1,26 @@
-.myMessage {
-  align-self: flex-end;
-}
-
 .message {
   align-self: flex-start;
+  margin-bottom: 10px;
+  background-color: #cfcfcf;
+  padding: 5px 10px;
+  border-radius: 12px;
+  max-width: 80%;
+  min-width: 20%;
+
+  .text {
+    padding-bottom: 5px;
+  }
+  .time {
+    color: #7f7f7f;
+    font-size: 0.75em;
+  }
+}
+
+.myMessage {
+  align-self: flex-end;
+  background-color: #cfdfff;
+
+  .text, .time {
+    text-align: right;
+  }
 }

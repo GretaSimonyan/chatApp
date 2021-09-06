@@ -3,11 +3,24 @@
   align-items: center;
   justify-content: space-between;
   height: 50px;
-  background: green;
+  background: #6e88b1ee;
   position: relative;
   z-index: 5;
   padding: 0 20px;
 
+  .link {
+    color: white;
+    font-weight: 700;
+    padding: 0 5px;
+
+    &:visited {
+      color: white;
+    }
+
+    &:hover {
+      color: #a2ddf9;
+    }
+  }
   .left {
     display: flex;
     justify-content: flex-start;

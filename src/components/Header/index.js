@@ -21,13 +21,10 @@ function Header() {
       <div className={styles.left}>
         {
           currUser?.id &&
-          <Link to="/chat" className={styles.link}>Chat</Link>
-        }
-      </div>
-      <div className={styles.left}>
-        {
-          currUser?.id &&
-          <Link to="/users" className={styles.link}>Users</Link>
+          <>
+            <Link to="/" className={styles.link}>Chat</Link>
+            <Link to="/users" className={styles.link}>Users</Link>
+          </>
         }
       </div>
       <div className={styles.right}>

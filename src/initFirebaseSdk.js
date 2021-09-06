@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { doc, onSnapshot, getFirestore, collection, addDoc, setDoc, getDocs, query, orderBy } from 'firebase/firestore';
+import { doc, onSnapshot, getFirestore, collection, addDoc, setDoc, getDocs, query, orderBy, where } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyArmcmW04W9EnRxiJ3aeDPMs9p0rKnaafw',
@@ -65,6 +65,22 @@ export const saveUserData = ({first_name, last_name, id, picture: { data: { url 
 
 export const getUser = async() => {
   const querySnapshot = await getDocs(collection(db, 'users'));
+  return querySnapshot.docs.map((doc) => {
+    const data = doc.data();
+    return {
+      ...data,
+      id: doc.id,
+    }
+  });
+};
+
+export const getUsers = async(ids) => {
+  const q = query(
+    collection(db, 'users'),
+    where('__name__', 'in', ids),
+  );
+
+  const querySnapshot = await getDocs(q);
   return querySnapshot.docs.map((doc) => {
     const data = doc.data();
     return {
