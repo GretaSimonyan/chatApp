@@ -91,7 +91,13 @@ export const getUsers = async(ids) => {
 };
 
 export const saveConversationData = (myId, userId) => {
-  const convId = [myId, userId].sort().join('_');
+  const [user1Id, user2Id] = [myId, userId].sort();
+  const q = query(
+    collection(db, 'conversations'),
+    where(['user1Id', '==', userId],['user2Id', '==', userId],['user1Id', '==', myId],['user2Id', '==', myId]),
+    // where('user1Id', '==', userId),
+    // where('user2Id', '==', userId),
+  );
   return setDoc(doc(db, 'conversations', convId), {}, {merge: true})
     .then((res) => console.log('response', res) || convId);
 };

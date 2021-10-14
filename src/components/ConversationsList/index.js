@@ -12,12 +12,13 @@ const getConversationUserId = (myId, convId) => {
 }
 
 const getUsersIdList = (myId, conversationsList) => {
+  console.log('conversationsList', conversationsList);
   return conversationsList.map(({id}) => getConversationUserId(myId, id))
 };
 
 export default function ConversationsList() {
   const dispatch = useDispatch();
-  const conversationsList = useSelector((store) => store.conversations.list);
+  const conversationsList = useSelector(store => store.conversations.list);
   const currUser = useSelector(store => store.users.currUser);
   const usersMap = useSelector(store => store.users.usersMap);
 
